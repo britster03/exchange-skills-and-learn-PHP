@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
@@ -29,35 +28,28 @@
         </div>
     </div>
     <?php
-    // Check if the form was submitted
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        // Get form data
         $username = $_POST["username"];
         $email = $_POST["email"];
         $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        // Create a connection to the database (replace with your database credentials)
         $db_host = "localhost";
         $db_user = "root";
         $db_password = "";
         $db_name = "skill";
         $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-        // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Prepare and execute the SQL statement
         $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
         $stmt->execute();
 
-        // Close the connection
         $stmt->close();
         $conn->close();
 
-        // Redirect to login page after successful signup
         header("Location: login.php");
         exit;
     }

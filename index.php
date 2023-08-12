@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <!-- Navbar -->
+    
     <nav class="bg-blue-500 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-white text-xl font-semibold">Skill Exchange</a>
@@ -19,7 +19,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+  
     <header class="bg-gray-200 py-20">
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-semibold mb-4">Welcome to Skill Exchange</h1>
@@ -27,16 +27,16 @@
         </div>
     </header>
 
-    <!-- PHP Content -->
+ 
     <?php
-        // Sample dynamic content from PHP
+      
         $skills = array(
             "Cooking Lessons" => "I can teach you how to cook delicious meals!",
             "Photography" => "Learn the art of photography from a professional."
         );
     ?>
 
-    <!-- Skill Listings -->
+   
     <section class="container mx-auto py-12">
         <h2 class="text-2xl font-semibold mb-6">Available Skills</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

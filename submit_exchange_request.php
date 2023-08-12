@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conn->close();
 } else {
-    // Redirect back to index.php if accessed directly
     header("Location: dashboard.php");
     exit();
 }

@@ -1,27 +1,21 @@
 <?php
-// Start a new session
 session_start();
 
-// Check if the user is not logged in
 if (!isset($_SESSION["user_email"])) {
-    // Redirect to the login page if not logged in
     header("Location: login.php");
     exit;
 }
 
-// Create a connection to the database (replace with your database credentials)
 $db_host = "localhost";
 $db_user = "root";
 $db_password = "";
 $db_name = "skill";
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle the search
 $profileFound = false;
 $profileInfo = [];
 $selected_user_email = "";
@@ -29,7 +23,6 @@ $selected_user_email = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["search_username"])) {
     $search_username = $_POST["search_username"];
 
-    // Retrieve the user's details from the dashboard_info table
     $query = "SELECT * FROM dashboard_info WHERE username = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $search_username);
@@ -37,14 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["search_username"])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // User's profile found
         $profileFound = true;
         $profileInfo = $result->fetch_assoc();
     }
 }
 
 
-// Close the connection
 $conn->close();
 ?>
 
@@ -54,7 +45,6 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Profile</title>
-    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
