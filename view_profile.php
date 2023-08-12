@@ -24,7 +24,7 @@ if ($conn->connect_error) {
 // Handle the search
 $profileFound = false;
 $profileInfo = [];
-$selected_user_email = "user_email";
+$selected_user_email = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["search_username"])) {
     $search_username = $_POST["search_username"];
@@ -42,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["search_username"])) {
         $profileInfo = $result->fetch_assoc();
     }
 }
-
 
 
 // Close the connection
@@ -73,20 +72,13 @@ $conn->close();
             </form>
             <?php if ($profileFound) { ?>
                 <div class="bg-white p-4 rounded shadow-md">
-                    <h2 class="text-xl font-semibold mb-2">Profile Details</h2>
+                    <h2>Profile</h2>
                     <p><strong>Username:</strong> <?php echo $profileInfo["username"]; ?></p>
                     <p><strong>Skills Acquired:</strong> <?php echo $profileInfo["skills"]; ?></p>
-                </div>
             <?php } elseif ($_SERVER["REQUEST_METHOD"] === "POST") { ?>
                 <p class="text-red-500 mt-2">Profile not found.</p>
             <?php } ?>
         </div>
-<!-- Create Exchange Request Form -->
-<form action="submit_exchange_request.php" method="post">
-    <input type="hidden" name="receiver_email" value="<?php echo $selected_user_email; ?>">
-    <button type="submit" name="send_exchange_request" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-        Create Exchange Request
-    </button>
     </div>
 </body>
 </html>

@@ -1,30 +1,45 @@
 <?php
-session_start();
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $sender_email = $_SESSION["user_email"];
-    $receiver_email = $_POST["receiver_email"];
-    $request_type = $_POST["request_type"];
-    $details = $_POST["details"];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $skills = $_POST['skills'] ?? '';
+    $request = $_POST['request'] ?? '';
 
-    $db_host = "localhost";
+
+
+    $uploadDirectory = "pdf/";
+    $resumePath = $uploadDirectory . basename($_FILES["resume"]["name"]);
+    move_uploaded_file($_FILES["resume"]["tmp_name"], $resumePath);
+
+
+    $host = "localhost";
     $db_user = "root";
     $db_password = "";
     $db_name = "skill";
 
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
+    $conn = new mysqli($host, $db_user, $db_password, $db_name);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $stmt = $conn->prepare("INSERT INTO exchange_requests (sender_email, receiver_email, request_type, details) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $sender_email, $receiver_email, $request_type, $details);
-    $stmt->execute();
+  
+    $sql_insert = "INSERT INTO exchange_request_info (name, email, skills, request, resume_path) VALUES ('$name', '$email', '$skills','$request', '$resumePath')";
+    if ($conn->query($sql_insert) === TRUE) {
 
-    $stmt->close();
+        header("Location: dashboard.php"); 
+    } else {
+
+        echo "Error: " . $sql_insert . "<br>" . $conn->error;
+    }
+
+    
+
     $conn->close();
-
-    header("Location: view_profile.php");
-    exit;
+} else {
+    // Redirect back to index.php if accessed directly
+    header("Location: dashboard.php");
+    exit();
 }
 ?>

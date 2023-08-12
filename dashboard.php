@@ -69,6 +69,8 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Include Tailwind CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
@@ -109,14 +111,61 @@ $conn->close();
         Logout
     </button>
 </form>
-<form action="view_profile.php" method="post" class="mt-4">
-    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
-        View Profile
-    </button>
-</form>
-
+            <form action="view_profile.php" method="post" class="mt-4">
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
+                        View Profile
+                </button>
+            </form>
+            <form action="exchange_requests.php" method="post" class="mt-4">
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
+                    View Exchange Requests
+                </button>
+            </form>
+            
+            <button type="submit" onclick="toggleJobRequestForm()" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
+                Make Skill Exchange Request.
+            </button>
+            <div id="jobRequestForm" class="mt-4" style="display: none;">
+        <div class="container">
+            <h3>Job Exchange Form</h3>
+            <form action="submit_exchange_request.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <textarea name="skills" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="request">Requesting to</label>
+                <textarea name="request" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="resume">Upload Resume</label>
+                <input type="file" name="resume" class="form-control-file" required accept=".pdf">
+            </div>
+            <button type="submit" class="btn btn-success">Submit Exchange Request</button>
+            </form>
         </div>
     </div>
 
+        </div>
+    </div>
+    
+
+<script>
+    function toggleJobRequestForm() {
+        const formDiv = document.getElementById("jobRequestForm");
+        formDiv.style.display = formDiv.style.display === "none" ? "block" : "none";
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
